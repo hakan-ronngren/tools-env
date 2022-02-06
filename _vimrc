@@ -5,7 +5,7 @@ set hlsearch
 set backspace=2
 set hidden
 set expandtab
-set number
+set nonumber
 set statusline=%F%m%r%h%w\ [TYPE=%Y\ %{&ff}]\ [%l/%L\ (%p%%)]
 set scrolloff=3
 set bufhidden=hide
@@ -26,12 +26,14 @@ nnoremap <silent> <s-tab> :if &modifiable && !&readonly && &modified <CR> :write
 " Key bindings for the Tag List plugin: http://vim-taglist.sourceforge.net/manual.html
 nnoremap <F2> :TlistSessionSave
 nnoremap <F4> :TlistSessionLoad
-nnoremap <silent> <F10> :TlistToggle<CR>
 " Assist when breaking lines properly
 nnoremap <F8> :set colorcolumn=72,80<CR>
 nnoremap <s-F8> :set colorcolumn=<CR>
 " No highlight
 nnoremap <F9> :nohls<CR>
+" Line numbers
+nnoremap <F10> :set nonumber<CR>
+nnoremap <s-F10> :set number<CR>
 "
 nnoremap <F12> g~ww
 "
