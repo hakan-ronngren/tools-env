@@ -5,7 +5,7 @@ set hlsearch
 set backspace=2
 set hidden
 set expandtab
-"set number
+set number
 set statusline=%F%m%r%h%w\ [TYPE=%Y\ %{&ff}]\ [%l/%L\ (%p%%)]
 set scrolloff=3
 set bufhidden=hide
@@ -53,3 +53,9 @@ au BufReadPost,BufNewFile *.pl,*.pm,*.t set filetype=perl
 
 " ls /usr/share/vim/vim*/colors/
 :color delek
+
+" force new regexp engine, which is the default in every
+" distribution except for the apple one
+" syntax highlighting file for groovy fails otherwise
+" https://github.com/vim/vim/issues/7280
+:set regexpengine=0
