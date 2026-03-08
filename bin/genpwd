@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+
+import sys
+from random import randint
+
+print(len(sys.argv))
+if len(sys.argv) == 2:
+    length = int(sys.argv[1])
+else:
+    length = 12
+
+def random_char():
+    alphabet = 'abcdefghilmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ123456789[](),.;:_-$!%&/='
+    return alphabet[randint(0, len(alphabet) - 1)]
+
+print(''.join((list(random_char() for i in range(0, length)))))

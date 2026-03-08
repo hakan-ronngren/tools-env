@@ -1,0 +1,6 @@
+date -u +"%H:%M:%SZ"#!/bin/bash
+
+while read line ; do
+    ts=$(date +"%H:%M:%S")
+    echo "$ts $line"
+done

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+date_pattern='[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}'
+
+if [ "$#" -eq 0 ] ; then
+    echo "usage: $(basename $0): <VIDEO_FILE> [...]"
+fi
+
+n=$#
+while [ "$#" -gt 0 ] ; do
+    path="$1"
+    shift
+    dirpath=$(dirname "${path}")
+    filename=$(basename "${path}")
+    if grep -q "^${date_pattern}_" <<< ${filename} ; then
+        continue
+    fi
+    datetime=$(ffprobe -v error -show_entries format_tags=creation_time -of default=noprint_wrappers=1:nokey=1 "${path}")
+    date=$(cut -f1 -dT <<< ${datetime})
+    if ! grep -q "^${date_pattern}\$" <<< "${date}" ; then
+        echo "ffprobe outputs ${date}, which is not an ISO date" >&2
+        exit 1
+    fi
+    new_name="${date}_${filename}"
+    echo ${new_name}
+    mv "${path}" "${dirpath}/${new_name}"
+done

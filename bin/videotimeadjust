@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Adjust the creation time of video files in all folders under the current working
+# directory, according to metadata in each file
+
+function process {
+    f=$1
+    bf=$(basename $f)
+    if [[ $bf =~ ^[0-9]{8}_[0-9]{6}\.[Mm][Pp]4$ ]] ; then
+        TIME=$(echo $bf | cut -c1-8,10-13)
+    elif [[ $bf =~ ^G[A-Z][0-9]{6}[a-z]?\.(360|[Mm][Pp]4)$ ]] ; then
+        TIME=$(mediainfo "$f" | fgrep 'Encoded date' | head -1 | awk '{ print $5 $6 }' | sed 's/[-:]//g' | cut -c1-12)
+    else
+        echo "$f: no rule for handling files with such a name"
+        continue
+    fi
+    echo "$f: $TIME"
+    touch -t $TIME "$f"
+    shift
+}
+
+find * -iname "*.mp4" | while read f ; do
+    process $f
+done
+
+find * -iname "*.360" | while read f ; do
+    process $f
+done

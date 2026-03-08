@@ -1,0 +1,24 @@
+#!bash -e
+
+if [ "$1" == 'init' ] ; then
+    mkdir -p .terraform
+    /opt/homebrew/bin/terraform "$@"
+    exit
+fi
+
+# Run terraform with all given arguments wherever there is one .terraform directory,
+# zero, one, or two subdirectories deep.
+
+terraform_dir_count=$(find . -maxdepth 3 -type d -name .terraform | wc -l)
+if [ "$terraform_dir_count" -eq 0 ]; then
+  echo "Error: no .terraform directory found within two subdirectories" >&2
+  exit 1
+elif [ "$terraform_dir_count" -gt 1 ]; then
+  echo "Error: multiple .terraform directories found, bailing out" >&2
+  exit 1
+fi
+
+terraform_dir=$(find . -maxdepth 3 -type d -name .terraform | head -n 1 | xargs dirname)
+
+cd "$terraform_dir"
+/opt/homebrew/bin/terraform "$@"
