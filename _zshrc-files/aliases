@@ -29,6 +29,14 @@ alias gco='git checkout'
 alias gsc='git switch -c'
 alias gst='git status'
 
+function gcmp () {
+    git checkout $(get-default-branch)
+    git pull --prune 2>&1 | tee /tmp/pull.txt
+    grep -F '[deleted]' /tmp/pull.txt | sed 's|.*origin/||' | while read b ; do
+        git branch -D $b 2>&1 | grep --color=always '^Deleted branch.*'
+    done
+}
+
 function ggn () {
     # The sed is to add a space after the second colon, so the output line becomes clickable in an IDE console
     git grep -n "$@" | sed 's/:\([0-9]*\):/:\1: /'

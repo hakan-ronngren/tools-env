@@ -3,7 +3,6 @@
 import sys
 from random import randint
 
-print(len(sys.argv))
 if len(sys.argv) == 2:
     length = int(sys.argv[1])
 else:

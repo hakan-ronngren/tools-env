@@ -33,18 +33,16 @@ function precmd() {
         tf="($(terraform workspace show))"
     fi
 
-    # TODO: set up gcloud-which
-    gc="(gcloud-which not set up)"
-    # gc=$(gcloud-which)
-    # if [ "$gc" = "nordnet" ] ; then
-    #     gc="${cyan}N${tf}${normal}"
-    # elif [ "$gc" = "private" ] ; then
-    #     gc="${blue}P${tf}${normal}"
-    # elif [ "$gc" = "maglo" ] ; then
-    #     gc="${red}M${tf}${normal}"
-    # else
-    #     gc="?"
-    # fi
+    gc=$(gcloud-which)
+    if [ "$gc" = "nordnet" ] ; then
+        gc="${cyan}N${tf}${normal}"
+    elif [ "$gc" = "private" ] ; then
+        gc="${blue}P${tf}${normal}"
+    elif [ "$gc" = "maglo" ] ; then
+        gc="${red}M${tf}${normal}"
+    else
+        gc="?"
+    fi
 
     if git status > /dev/null 2>&1 ; then
         mod=$(git status --porcelain | wc -l)
