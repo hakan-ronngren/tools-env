@@ -1,0 +1,45 @@
+alias brew-update-all='brew update && brew upgrade && brew upgrade --cask --greedy && brew cleanup'
+
+alias dark="osascript -e 'tell application \"System Events\" to tell appearance preferences to set dark mode to true'"
+alias light="osascript -e 'tell application \"System Events\" to tell appearance preferences to set dark mode to false'"
+
+alias firebase-login='firebase login --reauth'
+alias gcloud-login='gcloud auth login --update-adc'
+
+alias docker-cleanup='docker system prune --force --all --volumes'
+
+alias fgrep='grep -F'
+alias toudh='touch'
+alias ls='ls --color=auto'
+alias ll='ls -l'
+alias .='source'
+alias ..='cd ..'
+alias ...='cd .. ; cd ..'
+alias ....='cd .. ; cd .. ; cd ..'
+alias .....='cd .. ; cd .. ; cd .. ; cd ..'
+
+alias py='python3'
+alias tf='terraform'
+alias ttf='terraform fmt --recursive'
+
+alias gti='git'
+alias get-default-branch="git symbolic-ref refs/remotes/origin/HEAD | sed 's|.*/||'"
+alias gcm='git checkout \$(get-default-branch)'
+alias gco='git checkout'
+alias gsc='git switch -c'
+alias gst='git status'
+
+function ggn () {
+    # The sed is to add a space after the second colon, so the output line becomes clickable in an IDE console
+    git grep -n "$@" | sed 's/:\([0-9]*\):/:\1: /'
+}
+
+function ggin () {
+    # The sed is to add a space after the second colon, so the output line becomes clickable in an IDE console
+    git grep -in "$@" | sed 's/:\([0-9]*\):/:\1: /'
+}
+
+function venv () {
+    [ -d venv ] || python3 -m venv venv
+    source venv/bin/activate
+}

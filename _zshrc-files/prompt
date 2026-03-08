@@ -1,0 +1,64 @@
+# Print a separate line with useful info before the prompt
+function precmd() {
+    exit_code=$?
+
+    red='\e[1;31m'
+    green='\e[1;32m'
+    blue='\e[1;34m'
+    cyan='\e[1;36m'
+    normal='\e[0m'
+
+    # Recognise the Copilot terminal and print a special prompt there
+    if [ "$GIT_PAGER" = 'cat' ] ; then
+        printf "${cyan}🤖 Copilot Terminal${normal}\n"
+        return
+    fi
+
+    if [ $exit_code -eq 0 ] ; then
+        ec="${green}\u2713${normal}"
+    else
+        ec="${red}\u2717${normal}"
+    fi
+
+    ts=$(date +%H:%M:%S)
+
+    if [ $PWD = $HOME ] ; then
+        dir='~'
+    else
+        dir=$(basename $PWD)
+    fi
+
+    tf=''
+    if [ -d ".terraform" ] ; then
+        tf="($(terraform workspace show))"
+    fi
+
+    # TODO: set up gcloud-which
+    gc="(gcloud-which not set up)"
+    # gc=$(gcloud-which)
+    # if [ "$gc" = "nordnet" ] ; then
+    #     gc="${cyan}N${tf}${normal}"
+    # elif [ "$gc" = "private" ] ; then
+    #     gc="${blue}P${tf}${normal}"
+    # elif [ "$gc" = "maglo" ] ; then
+    #     gc="${red}M${tf}${normal}"
+    # else
+    #     gc="?"
+    # fi
+
+    if git status > /dev/null 2>&1 ; then
+        mod=$(git status --porcelain | wc -l)
+        git_status=""
+        if [ $mod -gt 0 ] ; then
+            git_status="${green}+"
+        fi
+        git_branch=$(git branch | sed -n '/\* /s///p')
+        git_info="${blue}${git_branch}${git_status}${normal} "
+    else
+        git_info=""
+    fi
+
+    printf "${ec} ${ts} ${gc} ${cyan}${dir}${normal} ${git_info}\n"
+}
+
+PROMPT=$(printf "\u2192 ")

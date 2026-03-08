@@ -1,0 +1,5 @@
+PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+# VS Code shell integration adds a lot of totally stupid and useless behavior, but Copilot Terminal needs it
+if [[ "$TERM_PROGRAM" == 'vscode' ]] ; then
+    . "$(code --locate-shell-integration-path $(basename $SHELL))"
+fi
