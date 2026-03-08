@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# This script keeps my gcloud settings totally separate, so that I have
+# to type only one single command to completely switch between them.
+# ~/.config/gcloud is a symbolic link that points to an actual configuration directory:
+# ~/.config/gcloud-maglo
+# ~/.config/gcloud-private
+
+name=$(basename $0 | sed 's/gcloud-//')
+case $name in
+    which)
+        readlink ~/.config/gcloud | sed 's/gcloud-//'
+        ;;
+    *)
+        cd ~
+        rm -f .kube
+        ln -s .kube-$name .kube
+        rm -f .npmrc
+        [ -f .npmrc-$name ] && ln -s .npmrc-$name .npmrc
+        cd ~/.config
+        rm -f gcloud
+        ln -s gcloud-$name gcloud
+        ;;
+esac
