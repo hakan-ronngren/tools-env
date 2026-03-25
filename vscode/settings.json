@@ -1,0 +1,32 @@
+{
+  "editor.renderWhitespace": "all",
+  "editor.rulers": [80, 120],
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "[yaml]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "files.autoSave": "afterDelay",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "window.openFoldersInNewWindow": "on",
+  "window.openFilesInNewWindow": "on",
+  "window.restoreWindows": "all",
+  "workbench.editor.closeOnFileDelete": true,
+  "workbench.editor.wrapTabs": true,
+  "workbench.editor.enablePreview": false,
+  "editor.unicodeHighlight.allowedCharacters": {
+    "’": true
+  },
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "terminal.integrated.suggest.enabled": false,
+  "terraform.languageServer.enable": true,
+  "explorer.confirmDelete": false,
+"git.openRepositoryInParentFolders": "never",
+"claudeCode.preferredLocation": "panel",
+"claudeCode.selectedModel": "default",
+"explorer.confirmDragAndDrop": false,
+"js/ts.updateImportsOnFileMove.enabled": "always"
+}
